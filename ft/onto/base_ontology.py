@@ -1,5 +1,5 @@
 # ***automatically_generated***
-# ***source json:forte/ontology_specs/base_ontology.json***
+# ***source json:../../../../casl/forte/forte/ontology_specs/base_ontology.json***
 # flake8: noqa
 # mypy: ignore-errors
 # pylint: skip-file
@@ -8,7 +8,6 @@ Automatically generated ontology base_ontology. Do not change manually.
 """
 
 from dataclasses import dataclass
-from forte.data.base_pack import PackType
 from forte.data.data_pack import DataPack
 from forte.data.multi_pack import MultiPack
 from forte.data.ontology.core import Entry
@@ -54,6 +53,7 @@ __all__ = [
     "MRCQuestion",
     "Recording",
     "AudioUtterance",
+    "NegationContext",
 ]
 
 
@@ -539,7 +539,7 @@ class Recording(AudioAnnotation):
 
     recording_class: List[str]
 
-    def __init__(self, pack: PackType, begin: int, end: int):
+    def __init__(self, pack: DataPack, begin: int, end: int):
         super().__init__(pack, begin, end)
         self.recording_class: List[str] = []
 
@@ -554,6 +554,21 @@ class AudioUtterance(AudioAnnotation):
 
     speaker: Optional[str]
 
-    def __init__(self, pack: PackType, begin: int, end: int):
+    def __init__(self, pack: DataPack, begin: int, end: int):
         super().__init__(pack, begin, end)
         self.speaker: Optional[str] = None
+
+
+@dataclass
+class NegationContext(Annotation):
+    """
+    A span based annotation `NegationContext`, used to represent the negation context of a named entity.
+    Attributes:
+        polarity (Optional[bool]):
+    """
+
+    polarity: Optional[bool]
+
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
+        self.polarity: Optional[bool] = None
